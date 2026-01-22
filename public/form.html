@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecode - Mensagem Enviada</title>
+
+    <!-- Styles and Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+    <script>
+        /**
+         * Tailwind CSS Custom Configuration
+         * Defines the core design tokens: colors and typography.
+         */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3A5A7A',
+                        secondary: '#B0B9C2',
+                        accent: '#00C1D4',
+                    },
+                    fontFamily: {
+                        heading: ['Montserrat', 'sans-serif'],
+                        body: ['Open Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-body bg-primary text-white antialiased relative">
+
+    <!-- Global Background Particle Effect -->
+    <div id="tsparticles-global" class="fixed inset-0 z-[-10]"></div>
+
+    <!-- Main Content -->
+    <main class="min-h-screen flex flex-col items-center justify-center p-4 relative z-10">
+
+        <div
+            class="w-full max-w-xl bg-[#3A5A7A]/50 backdrop-blur-md p-8 md:p-12 rounded-2xl border border-secondary/20 text-center shadow-2xl relative overflow-hidden">
+
+            <!-- Logo Section -->
+            <a href="/"
+                class="inline-flex items-center justify-center space-x-2 mb-6 transition-transform hover:scale-105 relative z-10"
+                title="Voltar para a página inicial">
+                <img src="images/draw.png" alt="Architecode Symbol" class="h-8 md:h-10">
+                <img src="images/text.png" alt="ArchiteCode Logo" class="h-5 md:h-6">
+            </a>
+
+            <!-- Confirmation Message -->
+            <h1 class="font-heading font-bold text-xl md:text-2xl text-white mb-4 relative z-10">
+                Mensagem Enviada com Sucesso!
+            </h1>
+
+            <p class="text-secondary text-base md:text-lg mb-8 relative z-10 leading-relaxed">
+                Seus dados foram encaminhados para a nossa equipe. Agradecemos o seu interesse nas soluções Architecode
+                e em breve entraremos em contato.
+            </p>
+
+            <!-- Actions -->
+            <a href="https://architecode.com"
+                class="group relative z-10 inline-flex items-center justify-center mt-2 bg-transparent border-2 border-white text-white font-semibold rounded-full transition-all duration-300 hover:bg-white hover:text-primary hover:shadow-lg hover:-translate-y-1 py-3 px-8">
+                <i data-feather="arrow-left"
+                    class="w-5 h-5 mr-3 transition-transform duration-300 group-hover:-translate-x-1"></i>
+                <span>Voltar para o Início</span>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- Post-Load Scripts -->
+    <script>
+        feather.replace();
+
+        /**
+         * Initialize background particles for the success page.
+         */
+        tsParticles.load("tsparticles-global", {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#B0B9C2" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 2, random: true },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    out_mode: "out",
+                },
+                links: {
+                    enable: true,
+                    distance: 150,
+                    color: "#00C1D4",
+                    opacity: 0.4,
+                    width: 1
+                }
+            },
+            interactivity: {
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" }
+                },
+                modes: {
+                    grab: { distance: 140, links: { opacity: 1 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            detectRetina: true,
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+/*
+ * Global Styles
+ * =============
+ * Tailwind base + custom utilities for the Architecode landing page.
+ */
+
+/* --- Tailwind Directives --- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Custom Utilities --- */
+@layer utilities {
+
+  /* Pulse shadow animation for ChatWidget attention effect */
+  @keyframes pulse-shadow {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(58, 90, 122, 0.7);
+    }
+
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(58, 90, 122, 0);
+    }
+
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(58, 90, 122, 0);
+    }
+  }
+
+  .animate-pulse-shadow {
+    animation: pulse-shadow 2s infinite;
+  }
+
+  /* Hexagonal clip-path used for icon containers */
+  .hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+}

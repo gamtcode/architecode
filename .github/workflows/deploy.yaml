@@ -1,0 +1,54 @@
+# Deploy Workflow: Architecode Static Site
+#
+# Deploys the static export to HostGator via FTP.
+# Only runs after CI workflow completes successfully.
+# Separation ensures broken builds never reach production.
+
+name: Deploy to Production
+
+on:
+  workflow_run:
+    workflows:
+      - Quality & Build Verification
+    types:
+      - completed
+
+jobs:
+  web-deploy:
+    name: Build & Deploy para HostGator
+    runs-on: ubuntu-latest
+
+    # Deployment blocked until CI passes — prevents broken deployments
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (Static Export)
+        run: npm run build
+
+      - name: Deploy static content only
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+
+          # Only the /out directory is deployed — source code stays local
+          local-dir: out/
+
+          # Domain root on HostGator shared hosting
+          server-dir: /
+
+          # Intentional: removes stale files from previous deploys
+          dangerous-clean-slate: false
