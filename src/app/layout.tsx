@@ -13,6 +13,7 @@
  */
 
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Montserrat, Open_Sans } from "next/font/google"; // eslint-disable-line @next/next/no-page-custom-font
 import "./globals.css";
 
@@ -91,6 +92,21 @@ export default function RootLayout({
                 {/* External libraries loaded via CDN to avoid bundling */}
                 <script src="https://unpkg.com/feather-icons" async></script>
                 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js" async></script>
+
+                {/* Google Analytics */}
+                <Script
+                    src="https://www.googletagmanager.com/gtag/js?id=G-FK1E2S5FF5"
+                    strategy="afterInteractive"
+                />
+                <Script id="google-analytics" strategy="afterInteractive">
+                    {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', 'G-FK1E2S5FF5');
+                    `}
+                </Script>
 
                 {children}
             </body>

@@ -274,10 +274,10 @@ export const homeContent: HomePageContent = {
                 author: "Marcelo Mecchi",
                 role: "Founder and CEO",
                 company: "Aquamarine Capital",
-                link: {
+                /* link: {
                     label: "Conheça a Aquamarine Capital",
                     href: "https://aquamarineprivate.com.br",
-                },
+                }, */
             },
             {
                 quote:
@@ -285,10 +285,10 @@ export const homeContent: HomePageContent = {
                 author: "Joel Ligiero",
                 role: "Founder and CEO",
                 company: "ICE do Brasil",
-                link: {
+                /* link: {
                     label: "Conheça a ICE do Brasil",
                     href: "https://icebrasil.com.br",
-                },
+                }, */
             },
         ],
     },

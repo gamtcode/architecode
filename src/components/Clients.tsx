@@ -65,7 +65,7 @@ export default function Clients({ header, items }: ClientsProps) {
                                                 {testimonial.company}
                                             </div>
                                             <div className="text-slate-500">
-                                                {testimonial.author} | {testimonial.role}
+                                                {testimonial.author} {/* | {testimonial.role} */}
                                             </div>
                                             {testimonial.link && (
                                                 <a
