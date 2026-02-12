@@ -34,7 +34,7 @@ export default function TrackingEvents() {
                     event_category: 'engagement'
                 });
             }
-        }, 90000); // 90 seconds
+        }, 90000);
 
         window.addEventListener('scroll', handleScroll);
 
@@ -44,5 +44,5 @@ export default function TrackingEvents() {
         };
     }, []);
 
-    return null; // This component does not render anything
+    return null;
 }

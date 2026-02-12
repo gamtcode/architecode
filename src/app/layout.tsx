@@ -87,14 +87,11 @@ export default function RootLayout({
             <body
                 className={`${montserrat.variable} ${openSans.variable} font-body bg-primary text-white antialiased`}
             >
-                {/* Structured data for search engines */}
                 <JsonLd />
 
-                {/* External libraries loaded via CDN to avoid bundling */}
                 <script src="https://unpkg.com/feather-icons" async></script>
                 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js" async></script>
 
-                {/* Google Analytics & Google Ads */}
                 <Script
                     src="https://www.googletagmanager.com/gtag/js?id=G-FK1E2S5FF5"
                     strategy="afterInteractive"

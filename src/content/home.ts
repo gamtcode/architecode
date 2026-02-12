@@ -198,6 +198,7 @@ export const homeContent: HomePageContent = {
                 link: {
                     label: "Conhecer o NOVA",
                     href: "https://nova.architecode.com",
+                    trackingId: "nova",
                 },
             },
             {
@@ -208,6 +209,7 @@ export const homeContent: HomePageContent = {
                 link: {
                     label: "Conhecer o PULSE",
                     href: "https://pulse.architecode.com",
+                    trackingId: "pulse",
                 },
             },
             {
@@ -218,6 +220,7 @@ export const homeContent: HomePageContent = {
                 link: {
                     label: "Conhecer o PRIME",
                     href: "https://prime.architecode.com",
+                    trackingId: "prime",
                 },
             },
         ],

@@ -34,7 +34,6 @@ export const RotatingText = ({ tokens, isGlobalVisible }: RotatingTextProps) => 
         >
             {tokens.map((token) => {
                 if (token.type === 'break') {
-                    // Line breaks only visible on mobile for responsive text wrapping
                     return <br key={token.id} className="md:hidden" />;
                 }
 
@@ -46,7 +45,6 @@ export const RotatingText = ({ tokens, isGlobalVisible }: RotatingTextProps) => 
               ${token.isVisible ? 'opacity-100' : 'opacity-0'}
             `}
                     >
-                        {/* Trailing space matches legacy layout behavior */}
                         {token.text}{' '}
                     </span>
                 );

@@ -72,6 +72,14 @@ export default function Contact({ header, intro, links }: ContactProps) {
                                         href={link.href}
                                         className="flex items-center text-white hover:text-accent group transition-colors"
                                         target={link.href.startsWith("http") ? "_blank" : undefined}
+                                        onClick={() => {
+                                            if (link.href.startsWith('mailto:') && typeof window !== 'undefined' && window.gtag) {
+                                                window.gtag('event', 'email_click', {
+                                                    event_category: 'micro_conversion',
+                                                    event_label: 'contact_email'
+                                                });
+                                            }
+                                        }}
                                     >
                                         <div className="hexagon flex items-center justify-center w-12 h-12 bg-accent/20 mr-4 shrink-0">
                                             <i data-feather={link.icon} className="w-5 h-5 text-accent"></i>

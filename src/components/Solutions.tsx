@@ -46,6 +46,14 @@ export default function Solutions({ header, items }: SolutionsProps) {
                                         href={item.link?.href}
                                         target="_blank"
                                         ref={(el) => { cardRefs.current[index] = el; }}
+                                        onClick={() => {
+                                            if (typeof window !== 'undefined' && window.gtag && item.link?.trackingId) {
+                                                window.gtag('event', 'project_interest', {
+                                                    event_category: 'micro_conversion',
+                                                    event_label: item.link.trackingId
+                                                });
+                                            }
+                                        }}
                                         className={`case-card group relative flex flex-col h-full bg-white rounded-2xl overflow-hidden border transition-all duration-300 md:hover:shadow-xl md:hover:-translate-y-2 md:hover:border-accent/50 transform-gpu ${isActive
                                             ? "shadow-xl border-accent/50"
                                             : "border-slate-200 shadow-lg"

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 /**
  * AI-powered chat widget with WhatsApp quick-link.
@@ -25,6 +25,7 @@ export default function ChatWidget() {
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [sessionId, setSessionId] = useState('');
+    const hasTrackedChat = useRef(false);
 
     const toggleChat = () => {
         setIsOpen(!isOpen);
@@ -83,6 +84,15 @@ export default function ChatWidget() {
         setInputValue('');
         setIsLoading(true);
 
+        // GA4 Event: chat_message_sent (First engagement only)
+        if (!hasTrackedChat.current && typeof window !== 'undefined' && window.gtag) {
+            hasTrackedChat.current = true;
+            window.gtag('event', 'chat_message_sent', {
+                event_category: 'micro_conversion',
+                event_label: 'chat_engaged'
+            });
+        }
+
         try {
             const response = await fetch('https://webhook.gamt.click/webhook/architecode', {
                 method: 'POST',
@@ -121,14 +131,12 @@ export default function ChatWidget() {
 
     return (
         <>
-            {/* Overlay backdrop */}
             <div
                 id="chat-overlay"
                 className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[90] transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'hidden opacity-0'}`}
                 onClick={toggleChat}
             ></div>
 
-            {/* WhatsApp quick-link button */}
             <a
                 href="https://api.whatsapp.com/send?phone=5512981996782&text=Ol%C3%A1!%20Quero%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20servi%C3%A7os%20e%20solu%C3%A7%C3%B5es%20da%20Architecode."
                 target="_blank"
@@ -151,7 +159,6 @@ export default function ChatWidget() {
                 <i data-feather="smartphone" className="w-7 h-7 text-white"></i>
             </a>
 
-            {/* Chat toggle button */}
             <div
                 id="chat-icon"
                 className={`fixed bottom-6 right-6 z-[100] w-14 h-14 bg-[#e5e4e2] bg-opacity-80 rounded-full shadow-lg flex items-center justify-center cursor-pointer transition-all duration-500 hover:scale-110 animate-pulse-shadow ${isOpen ? 'hidden' : ''} ${visibilityClass}`}
@@ -160,12 +167,10 @@ export default function ChatWidget() {
                 <i data-feather="message-circle" className="w-8 h-8 text-white"></i>
             </div>
 
-            {/* Chat window */}
             <div
                 id="chat-window"
                 className={`fixed bottom-[90px] right-[20px] w-[350px] max-w-[90vw] h-[500px] max-h-[70vh] bg-white rounded-[10px] shadow-[0_5px_15px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col z-[10000] transition-all duration-300 ease-out ${isOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-5 pointer-events-none'}`}
             >
-                {/* Header */}
                 <div className="p-[15px] bg-[#3A5A7A] text-white flex justify-between items-center">
                     <div className="flex items-center gap-3">
                         <div>
@@ -181,7 +186,6 @@ export default function ChatWidget() {
                     </button>
                 </div>
 
-                {/* Message list */}
                 <div id="chat-body" className="flex-grow p-[15px] overflow-y-auto bg-[#f4f4f4] flex flex-col gap-[10px]">
                     {messages.map((msg, index) => (
                         <div
@@ -193,7 +197,6 @@ export default function ChatWidget() {
                     ))}
                 </div>
 
-                {/* Input form */}
                 <div className="p-[10px] border-t border-[#ddd] bg-white">
                     <form id="chat-form" className="flex gap-[10px]" onSubmit={(e) => { e.preventDefault(); sendMessage(); }}>
                         <input

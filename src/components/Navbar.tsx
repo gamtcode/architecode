@@ -67,14 +67,12 @@ export default function Navbar({ items }: NavbarProps) {
                             aria-controls="mobile-menu"
                             aria-expanded={isOpen}
                         >
-                            {/* Legacy parity: icon remains 'menu' regardless of state */}
                             <i data-feather="menu" className="w-6 h-6"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Mobile drawer with backdrop fade */}
             <div
                 id="mobile-menu"
                 className={`md:hidden fixed top-20 left-0 w-full h-[calc(100vh-5rem)] z-50 bg-black/50 backdrop-blur-sm transition-opacity duration-700 ease-in-out ${isOpen

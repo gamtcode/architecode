@@ -20,7 +20,6 @@ export default function Hero({ rotatingPhrases }: HeroContent) {
             id="home"
             className="relative text-left md:text-center flex items-start md:items-center md:justify-center h-[40vh] min-h-[450px] overflow-hidden"
         >
-            {/* sr-only H1 for SEO: visible text uses animated <p> for controlled rendering */}
             <h1 className="sr-only">
                 Architecode - Consultoria de Arquitetura e Engenharia de Software
             </h1>

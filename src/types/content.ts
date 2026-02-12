@@ -15,6 +15,7 @@ export interface LinkItem {
     label: string;
     href: string;
     icon?: IconName;
+    trackingId?: string;
 }
 
 /** Reusable section header structure */
