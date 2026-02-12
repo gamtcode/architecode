@@ -133,6 +133,19 @@ export default function ChatWidget() {
                 href="https://api.whatsapp.com/send?phone=5512981996782&text=Ol%C3%A1!%20Quero%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20servi%C3%A7os%20e%20solu%C3%A7%C3%B5es%20da%20Architecode."
                 target="_blank"
                 id="whatsapp-icon"
+                onClick={() => {
+                    if (typeof window !== 'undefined' && window.gtag) {
+                        // GA4 Event
+                        window.gtag('event', 'contact_whatsapp', {
+                            event_category: 'conversion',
+                            event_label: 'whatsapp_primary'
+                        });
+                        // Google Ads Conversion
+                        window.gtag('event', 'conversion', {
+                            send_to: 'AW-17943626047/-m6mCOKilfcbEL-CmOxC'
+                        });
+                    }
+                }}
                 className={`fixed bottom-24 right-6 z-[100] w-14 h-14 bg-[#e5e4e2] bg-opacity-80 rounded-full shadow-lg flex items-center justify-center cursor-pointer transition-all duration-500 hover:scale-110 animate-pulse-shadow ${isOpen ? 'hidden' : ''} ${visibilityClass}`}
             >
                 <i data-feather="smartphone" className="w-7 h-7 text-white"></i>

@@ -74,6 +74,7 @@ export const metadata: Metadata = {
 };
 
 import JsonLd from "../components/JsonLd";
+import TrackingEvents from "../components/TrackingEvents";
 
 export default function RootLayout({
     children,
@@ -93,7 +94,7 @@ export default function RootLayout({
                 <script src="https://unpkg.com/feather-icons" async></script>
                 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js" async></script>
 
-                {/* Google Analytics */}
+                {/* Google Analytics & Google Ads */}
                 <Script
                     src="https://www.googletagmanager.com/gtag/js?id=G-FK1E2S5FF5"
                     strategy="afterInteractive"
@@ -105,8 +106,11 @@ export default function RootLayout({
                     gtag('js', new Date());
 
                     gtag('config', 'G-FK1E2S5FF5');
+                    gtag('config', 'AW-17943626047');
                     `}
                 </Script>
+
+                <TrackingEvents />
 
                 {children}
             </body>

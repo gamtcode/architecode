@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { SectionHeader, LinkItem } from "@/types/content";
 import FadeUp from "./ui/FadeUp";
 
@@ -10,10 +14,41 @@ interface ContactProps {
 /**
  * Contact section with form and link list.
  *
- * Form submits to `send-email.php` (server-side processing).
- * No client-side form handling or validation — static site architecture.
+ * Refactored to use Client Component with fetch API for submission.
+ * Handles loading, error states, and redirects to /success on completion.
  */
 export default function Contact({ header, intro, links }: ContactProps) {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        const formData = new FormData(e.currentTarget);
+
+        try {
+            const response = await fetch('/send-email.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.message || 'Erro no envio');
+            }
+
+            router.push('/success');
+        } catch (err) {
+            console.error(err);
+            setError('Não foi possível enviar. Tente novamente.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <section
             id="contact"
@@ -51,7 +86,7 @@ export default function Contact({ header, intro, links }: ContactProps) {
                     <div
                         className="bg-white/10 p-8 rounded-lg border border-secondary/10 h-full"
                     >
-                        <form action="send-email.php" method="POST" className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                                 <label htmlFor="name" className="sr-only">
                                     Nome
@@ -62,7 +97,8 @@ export default function Contact({ header, intro, links }: ContactProps) {
                                     id="name"
                                     placeholder="Nome"
                                     required
-                                    className="w-full bg-white/20 border-secondary/20 rounded-md py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent placeholder-white/70 transition-all"
+                                    disabled={loading}
+                                    className="w-full bg-white/20 border-secondary/20 rounded-md py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent placeholder-white/70 transition-all disabled:opacity-50"
                                 />
                             </div>
 
@@ -76,7 +112,8 @@ export default function Contact({ header, intro, links }: ContactProps) {
                                     id="email"
                                     placeholder="Email"
                                     required
-                                    className="w-full bg-white/20 border-secondary/20 rounded-md py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent placeholder-white/70 transition-all"
+                                    disabled={loading}
+                                    className="w-full bg-white/20 border-secondary/20 rounded-md py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent placeholder-white/70 transition-all disabled:opacity-50"
                                 />
                             </div>
 
@@ -90,7 +127,8 @@ export default function Contact({ header, intro, links }: ContactProps) {
                                     id="telefone"
                                     placeholder="Telefone"
                                     required
-                                    className="w-full bg-white/20 border-secondary/20 rounded-md py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent placeholder-white/70 transition-all"
+                                    disabled={loading}
+                                    className="w-full bg-white/20 border-secondary/20 rounded-md py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent placeholder-white/70 transition-all disabled:opacity-50"
                                 />
                             </div>
 
@@ -104,15 +142,23 @@ export default function Contact({ header, intro, links }: ContactProps) {
                                     rows={4}
                                     placeholder="Mensagem"
                                     required
-                                    className="w-full bg-white/20 border-secondary/20 rounded-md py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent placeholder-white/70 transition-all"
+                                    disabled={loading}
+                                    className="w-full bg-white/20 border-secondary/20 rounded-md py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent placeholder-white/70 transition-all disabled:opacity-50"
                                 ></textarea>
                             </div>
 
+                            {error && (
+                                <div className="text-red-400 text-sm font-medium">
+                                    {error}
+                                </div>
+                            )}
+
                             <button
                                 type="submit"
-                                className="w-full bg-slate-100 hover:bg-white text-[#3A5A7A] font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                                disabled={loading}
+                                className="w-full bg-slate-100 hover:bg-white text-[#3A5A7A] font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                             >
-                                Enviar Mensagem
+                                {loading ? 'Enviando...' : 'Enviar Mensagem'}
                             </button>
                         </form>
                     </div>
@@ -121,3 +167,4 @@ export default function Contact({ header, intro, links }: ContactProps) {
         </section>
     );
 }
+
